@@ -4,7 +4,7 @@
     {
       "name": "site",
       "runtimeExecutable": "/opt/homebrew/bin/node",
-      "runtimeArgs": ["/Users/nathannoble/Desktop/project/serve.js"],
+      "runtimeArgs": ["serve.js"],
       "port": 8080
     }
   ]

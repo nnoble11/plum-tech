@@ -1024,6 +1024,128 @@
       body { padding-bottom: 74px; }
     }
 
+    /* ── HERO CALL WIDGET ── */
+    .hero-call-widget {
+      margin-top: 36px;
+      position: relative;
+    }
+    .call-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,107,43,0.12);
+      border: 2px solid rgba(255,107,43,0.35);
+      color: #fff;
+      padding: 18px 36px;
+      border-radius: 60px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .call-btn:hover {
+      background: rgba(255,107,43,0.22);
+      border-color: var(--orange);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,107,43,0.3);
+    }
+    .call-btn:active { transform: translateY(0); }
+    .call-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .call-btn.connecting {
+      pointer-events: none;
+      opacity: 0.75;
+    }
+    .call-btn.connecting svg { animation: mic-pulse 1s ease-in-out infinite; }
+    @keyframes mic-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .call-active {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 28px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+    .call-orb-wrap {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+    .call-orb {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      transition: background 0.4s;
+    }
+    .call-orb.listening { background: var(--green); }
+    .call-orb.speaking { background: var(--orange); }
+    .call-orb-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      animation: orb-ring 2s ease-out infinite;
+      opacity: 0;
+    }
+    .call-orb.speaking + .call-orb-ring,
+    .call-orb.speaking ~ .call-orb-ring { border-color: var(--orange); }
+    @keyframes orb-ring {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    .call-orb-ring:nth-child(3) { animation-delay: 0.6s; }
+    .call-info { flex: 1; min-width: 0; }
+    .call-info-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2px;
+    }
+    .call-info-status {
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .call-end-btn {
+      background: rgba(231,76,60,0.15);
+      border: 2px solid rgba(231,76,60,0.4);
+      color: #e74c3c;
+      padding: 11px 24px;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      flex-shrink: 0;
+    }
+    .call-end-btn:hover {
+      background: rgba(231,76,60,0.3);
+      border-color: #e74c3c;
+      transform: translateY(-1px);
+    }
+    .call-error {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      color: #e74c3c;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .call-active { flex-wrap: wrap; gap: 16px; }
+      .call-end-btn { width: 100%; text-align: center; }
+    }
+
     @media (max-width: 480px) {
       .section { padding: 56px 0; }
       .hero { padding: 110px 0 56px; }
@@ -1067,6 +1189,32 @@
         <a href="#demo" class="btn btn-primary">Hear It In Action &rarr;</a>
         <a href="#cta" class="btn btn-secondary">Get Started &mdash; Free Pilot</a>
       </div>
+      <!-- Live AI Call Widget -->
+      <div class="hero-call-widget" id="callWidget">
+        <button class="call-btn" id="callBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+          <span id="callBtnLabel">Talk to Sarah &mdash; Live AI Demo</span>
+        </button>
+        <div class="call-active" id="callActive" style="display:none">
+          <div class="call-orb-wrap">
+            <div class="call-orb listening" id="callOrb"></div>
+            <div class="call-orb-ring"></div>
+            <div class="call-orb-ring"></div>
+          </div>
+          <div class="call-info">
+            <div class="call-info-label">Live AI Call</div>
+            <div class="call-info-status" id="callStatus">Listening&hellip;</div>
+          </div>
+          <button class="call-end-btn" id="callEndBtn">End Call</button>
+        </div>
+        <div class="call-error" id="callError"></div>
+      </div>
+
       <div class="hero-trust">
         <div class="hero-trust-item"><span class="dot"></span> No contracts</div>
         <div class="hero-trust-item"><span class="dot"></span> 2-week free pilot</div>
@@ -1683,6 +1831,103 @@
     e.preventDefault();
     const form = e.target;
     form.innerHTML = '<div style="text-align:center;padding:40px 0;"><h3 style="color:#fff;font-size:1.4rem;margin-bottom:12px;text-transform:none;">We\'ll be in touch!</h3><p style="color:rgba(255,255,255,0.65);font-size:1rem;">Expect a call within 24 hours to discuss your free demo.</p></div>';
+  });
+</script>
+
+<script type="module">
+  import { Conversation } from 'https://esm.sh/@elevenlabs/client';
+
+  const callBtn = document.getElementById('callBtn');
+  const callBtnLabel = document.getElementById('callBtnLabel');
+  const callActive = document.getElementById('callActive');
+  const callOrb = document.getElementById('callOrb');
+  const callStatus = document.getElementById('callStatus');
+  const callEndBtn = document.getElementById('callEndBtn');
+  const callError = document.getElementById('callError');
+
+  let conversation = null;
+
+  function showError(msg) {
+    callError.textContent = msg;
+    callError.style.display = 'block';
+    setTimeout(() => { callError.style.display = 'none'; }, 5000);
+  }
+
+  function resetUI() {
+    callBtn.style.display = 'inline-flex';
+    callBtn.classList.remove('connecting');
+    callBtnLabel.textContent = 'Talk to Sarah \u2014 Live AI Demo';
+    callActive.style.display = 'none';
+    conversation = null;
+  }
+
+  callBtn.addEventListener('click', async () => {
+    if (conversation) return;
+
+    callBtnLabel.textContent = 'Connecting\u2026';
+    callBtn.classList.add('connecting');
+    callError.style.display = 'none';
+
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch {
+      showError('Microphone access is required for the live demo.');
+      resetUI();
+      return;
+    }
+
+    let signedUrl;
+    try {
+      const res = await fetch('/signed-url');
+      if (!res.ok) throw new Error(await res.text());
+      signedUrl = await res.text();
+    } catch (err) {
+      showError('Could not connect to demo service. Please try again.');
+      console.error('Signed URL error:', err);
+      resetUI();
+      return;
+    }
+
+    try {
+      conversation = await Conversation.startSession({
+        signedUrl,
+        onConnect: () => {
+          callBtn.style.display = 'none';
+          callActive.style.display = 'flex';
+          callStatus.textContent = 'Listening\u2026';
+          callOrb.className = 'call-orb listening';
+        },
+        onDisconnect: () => {
+          resetUI();
+        },
+        onModeChange: ({ mode }) => {
+          if (mode === 'speaking') {
+            callStatus.textContent = 'Sarah is speaking\u2026';
+            callOrb.className = 'call-orb speaking';
+          } else {
+            callStatus.textContent = 'Listening\u2026';
+            callOrb.className = 'call-orb listening';
+          }
+        },
+        onError: (error) => {
+          console.error('Conversation error:', error);
+          showError('Call disconnected. Please try again.');
+          resetUI();
+        },
+      });
+    } catch (err) {
+      console.error('Session start error:', err);
+      showError('Failed to start call. Please try again.');
+      resetUI();
+    }
+  });
+
+  callEndBtn.addEventListener('click', async () => {
+    if (conversation) {
+      await conversation.endSession();
+      conversation = null;
+    }
+    resetUI();
   });
 </script>
 
