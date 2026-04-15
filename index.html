@@ -844,18 +844,6 @@
     }
     footer p { color: var(--text-secondary); font-size: 0.82rem; }
 
-    /* ── MOBILE CTA ── */
-    .mobile-cta {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 99;
-      background: var(--white);
-      padding: 12px 16px;
-      border-top: 1px solid var(--border);
-      box-shadow: 0 -2px 16px rgba(0,0,0,0.06);
-    }
-    .mobile-cta .btn { width: 100%; padding: 14px; font-size: 0.95rem; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
@@ -868,6 +856,14 @@
       .section-sub { margin-bottom: 40px; }
       .nav-links { display: none; }
       .nav-mobile-toggle { display: block; }
+      .nav-cta {
+        background: none !important;
+        color: var(--muted) !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        font-weight: 500 !important;
+      }
+      .nav-cta:hover { background: none !important; color: var(--text) !important; }
       .hero { min-height: auto; padding: 120px 24px 64px; }
       .hero .container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
       .hero-content { max-width: 100%; }
@@ -888,8 +884,7 @@
       .form-row { grid-template-columns: 1fr; }
       .call-active { flex-wrap: wrap; gap: 16px; }
       .call-end-btn { width: 100%; text-align: center; }
-      .mobile-cta { display: block; }
-      body { padding-bottom: 70px; }
+      
     }
 
     @media (max-width: 480px) {
@@ -970,20 +965,20 @@
   <div class="container">
     <div class="stats-row">
       <div class="stat">
-        <div class="stat-value">2,400+</div>
-        <div class="stat-label">Calls Handled Monthly</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">94%</div>
-        <div class="stat-label">Caller Satisfaction</div>
+        <div class="stat-value">24/7/365</div>
+        <div class="stat-label">Always On, No Sick Days</div>
       </div>
       <div class="stat">
         <div class="stat-value">&lt;3s</div>
-        <div class="stat-label">Answer Time</div>
+        <div class="stat-label">Average Answer Time</div>
       </div>
       <div class="stat">
-        <div class="stat-value">$180K+</div>
-        <div class="stat-label">Revenue Recovered</div>
+        <div class="stat-value">Unlimited</div>
+        <div class="stat-label">Simultaneous Calls Handled</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">85%</div>
+        <div class="stat-label">Of Unanswered Callers Call a Competitor</div>
       </div>
     </div>
   </div>
@@ -1335,10 +1330,6 @@
   </div>
 </footer>
 
-<!-- MOBILE CTA -->
-<div class="mobile-cta">
-  <a href="#cta" class="btn btn-primary">Get Your Free Demo &rarr;</a>
-</div>
 
 <script>
   const nav = document.getElementById('navbar');
